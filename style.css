@@ -1,0 +1,13 @@
+.container{
+    background-color: rgb(41, 54, 9);
+    color:rgb(166, 196, 138);
+}
+
+.concluida {
+    text-decoration: line-through;
+    color: rgb(107, 124, 91);
+}
+
+button{
+    color: #195000;
+}
