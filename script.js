@@ -20,8 +20,6 @@ botao.addEventListener("click", function () {
 
     const task = document.createElement("li");
 
-    task.textContent = textTask;
-
     // Remover
     const btnRemover = document.createElement("button");
     btnRemover.textContent = "X";
@@ -30,7 +28,11 @@ botao.addEventListener("click", function () {
         task.remove();
     });
 
+    const texto = document.createElement("span");
+    texto.textContent = textTask;
+
     task.appendChild(btnRemover);
+    task.appendChild(texto);
 
     // Marcar concluído
     task.addEventListener("click", function () {
@@ -39,6 +41,6 @@ botao.addEventListener("click", function () {
 
     list.appendChild(task);
 
-    input.value = " ";
+    input.value = "";
 });
 
