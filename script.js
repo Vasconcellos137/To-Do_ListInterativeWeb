@@ -26,6 +26,7 @@ botao.addEventListener("click", function () {
 
     btnRemover.addEventListener("click", function () {
         task.remove();
+        salvarTarefas();
     });
 
     const texto = document.createElement("span");
@@ -37,9 +38,12 @@ botao.addEventListener("click", function () {
     // Marcar concluído
     task.addEventListener("click", function () {
         task.classList.toggle("concluida");
+        salvarTarefas();
     });
 
     list.appendChild(task);
+
+    salvarTarefas();
 
     input.value = "";
 });
@@ -65,3 +69,59 @@ pendentesBtn.addEventListener("click", function () {
     const pendentes = contarPendentes();
     alert(`Você possui ${pendentes} tarefas pendentes.`);
 });
+
+function salvarTarefas() {
+
+    const tarefas = [];
+
+    document.querySelectorAll("#taskList li").forEach(function (task) {
+
+        tarefas.push({
+            texto: task.querySelector("span").textContent,
+            concluida: task.classList.contains("concluida")
+        });
+
+    });
+
+    localStorage.setItem("tarefas", JSON.stringify(tarefas));
+}
+
+function carregarTarefas() {
+
+    const tarefas = JSON.parse(localStorage.getItem("tarefas")) || [];
+
+    tarefas.forEach(function (item) {
+
+        const task = document.createElement("li");
+
+        const btnRemover = document.createElement("button");
+        btnRemover.textContent = "X";
+
+        const texto = document.createElement("span");
+        texto.textContent = item.texto;
+
+        task.appendChild(btnRemover);
+        task.appendChild(texto);
+
+        if (item.concluida) {
+            task.classList.add("concluida");
+        }
+
+        btnRemover.addEventListener("click", function () {
+            task.remove();
+            salvarTarefas();
+        });
+
+        task.addEventListener("click", function () {
+
+            if (event.target === btnRemover) return;
+
+            task.classList.toggle("concluida");
+            salvarTarefas();
+        });
+
+        list.appendChild(task);
+    });
+}
+
+carregarTarefas();
